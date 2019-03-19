@@ -1,0 +1,15 @@
+ΒusLines.txt
+------------
+Format: LineCode,LineId,DescriptionGreek,DescriptionEnglish
+
+
+BusPositions.txt
+----------------
+Format: LineId,RouteCode,vehicleId,latitude,longitude,timestampOfBusPosition
+
+
+
+RouteCodes.txt
+--------------
+Format: RouteCode,LineCode,RouteType,DescriptionGreek,DescriptionEnglish
+
