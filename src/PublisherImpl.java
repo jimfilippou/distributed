@@ -2,7 +2,6 @@ public class PublisherImpl implements Publisher {
 
     @Override
     public void getBrokerList() {
-
     }
 
     @Override

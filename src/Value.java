@@ -1,3 +1,5 @@
+import Models.Bus;
+
 public class Value {
 
     private Bus _bus;

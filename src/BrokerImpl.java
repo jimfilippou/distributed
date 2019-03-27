@@ -1,7 +1,7 @@
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class BrokerImpl implements Broker, Runnable {
+public class BrokerImpl implements Broker {
     @Override
     public void calculateKeys() {
 
@@ -46,11 +46,6 @@ public class BrokerImpl implements Broker, Runnable {
 
     @Override
     public void updateNodes() {
-
-    }
-
-    @Override
-    public void run() {
 
     }
 }
