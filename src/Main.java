@@ -11,5 +11,8 @@ public class Main {
 
         List<Bus> buses = BusReader.fetchBuses();
 
+        new Broker(8080).start();
+        new Broker(8081).start();
+
     }
 }
