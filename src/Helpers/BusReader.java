@@ -10,8 +10,8 @@ import java.util.Scanner;
 
 public class BusReader {
     public static List<Bus> fetchBuses() throws FileNotFoundException {
-        // Scanner input = new Scanner(new File("/Users/jimfilippou/Projects/distributed/src/Data/busLines.txt"));
-        Scanner input = new Scanner(new File("/home/jimfilippou/IdeaProjects/distributed/src/Data/busLines.txt"));
+         Scanner input = new Scanner(new File("/Users/jimfilippou/Projects/distributed/src/Data/busLines.txt"));
+        // Scanner input = new Scanner(new File("/home/jimfilippou/IdeaProjects/distributed/src/Data/busLines.txt"));
         input.useDelimiter("-\n");
         List<Models.Bus> buses = new ArrayList<>();
         while (input.hasNextLine()) {

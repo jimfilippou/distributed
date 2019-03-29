@@ -25,15 +25,13 @@ public class Broker implements Runnable {
                 ObjectOutputStream out = new ObjectOutputStream(connection.getOutputStream());
                 ObjectInputStream in = new ObjectInputStream(connection.getInputStream());
 
-                in.reset();
                 System.out.println(in.readUTF());
-                System.out.println(in.readObject());
 
                 in.close();
                 out.close();
                 connection.close();
             }
-        } catch (IOException | ClassNotFoundException err) {
+        } catch (IOException  err) {
             err.printStackTrace();
         } finally {
             try {
@@ -53,7 +51,6 @@ public class Broker implements Runnable {
 
     public void start() {
         this._thread_name = "THREAD" + this._port;
-        System.out.println("Starting " + this._thread_name);
         Thread thread = this._t;
         if (thread == null) {
             thread = new Thread(this, this._thread_name);

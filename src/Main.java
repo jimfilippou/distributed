@@ -11,8 +11,14 @@ public class Main {
 
         List<Bus> buses = BusReader.fetchBuses();
 
-        new Broker(8080).start();
-        new Broker(8081).start();
+
+
+        // Summon brokers
+        for (int port = 8080; port < 8080 + 5; port++) {
+            new Broker(port).start();
+        }
+
+        new Publisher().start();
 
     }
 }
