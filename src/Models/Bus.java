@@ -14,4 +14,9 @@ public class Bus {
         this._busLineID = busLineID;
         this._lineName = lineName;
     }
+
+    @Override
+    public String toString() {
+        return "Line number: " + this._lineNumber + "\nBus line ID: " + this._busLineID + "\nLine name: " + this._lineName;
+    }
 }

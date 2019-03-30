@@ -1,3 +1,5 @@
+import Models.Stigma;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -8,7 +10,6 @@ public class Broker implements Runnable {
 
     private int _port;
     private Thread _t;
-    private String _thread_name;
 
     public Broker(int port) {
         this._port = port;
@@ -25,13 +26,13 @@ public class Broker implements Runnable {
                 ObjectOutputStream out = new ObjectOutputStream(connection.getOutputStream());
                 ObjectInputStream in = new ObjectInputStream(connection.getInputStream());
 
-                System.out.println(in.readUTF());
+                System.out.println((Stigma) in.readObject());
 
                 in.close();
                 out.close();
                 connection.close();
             }
-        } catch (IOException  err) {
+        } catch (IOException | ClassNotFoundException err) {
             err.printStackTrace();
         } finally {
             try {
@@ -50,10 +51,10 @@ public class Broker implements Runnable {
     }
 
     public void start() {
-        this._thread_name = "THREAD" + this._port;
+        String _thread_name = "THREAD" + this._port;
         Thread thread = this._t;
         if (thread == null) {
-            thread = new Thread(this, this._thread_name);
+            thread = new Thread(this, _thread_name);
             thread.start();
         }
     }

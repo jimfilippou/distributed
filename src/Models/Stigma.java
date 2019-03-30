@@ -1,12 +1,14 @@
 package Models;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Stigma {
+public class Stigma implements Serializable {
 
+    private static final long serialVersionUID = 578515438738407941L;
     private double _lat;
     private double _lng;
     private Timestamp _timestamp;
@@ -27,5 +29,10 @@ public class Stigma {
         } catch (ParseException err) {
             err.printStackTrace();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Stigma{" + this._lat + ", " + this._lng + "}";
     }
 }
