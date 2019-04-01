@@ -3,6 +3,7 @@ import Models.Stigma;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -19,8 +20,9 @@ public class Broker implements Runnable {
         ServerSocket providerSocket = null;
         Socket connection = null;
         try {
-            providerSocket = new ServerSocket(this._port);
-            System.out.println("Broker started at: 127.0.0.1:" + this._port);
+            InetAddress addr = InetAddress.getByName("192.168.1.18");
+            providerSocket = new ServerSocket(this._port, 50, addr);
+            System.out.println("Broker started at:" + addr +  ":" + this._port);
             while (true) {
                 connection = providerSocket.accept();
                 ObjectOutputStream out = new ObjectOutputStream(connection.getOutputStream());

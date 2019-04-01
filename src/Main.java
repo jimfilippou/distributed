@@ -9,10 +9,12 @@ import java.lang.*;
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
 
+        int brokers = 5;
+
         List<Bus> buses = BusReader.fetchBuses();
 
         // Summon brokers
-        for (int port = 8080; port < 8080 + 5; port++) {
+        for (int port = 8080; port < 8080 + brokers; port++) {
             new Broker(port).start();
         }
 
