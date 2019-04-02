@@ -1,6 +1,7 @@
 package Helpers;
 
-import Models.Bus;
+
+import Models.Broker;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,13 +10,22 @@ import java.util.List;
 import java.util.Scanner;
 
 public class BrokerProvider {
-    public static List<String> fetchBrokers() throws FileNotFoundException {
-        Scanner input = new Scanner(new File("/Users/jimfilippou/Projects/distributed/src/Data/brokers.txt"));
+
+    public static List<Broker> fetchBrokers() {
+        Scanner input = null;
+        try {
+            input = new Scanner(new File("/Users/jimfilippou/Projects/distributed/src/Data/brokers.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         input.useDelimiter("-\n");
-        List brokers = new ArrayList<>();
+        List<Broker> brokers = new ArrayList<>();
         while (input.hasNextLine()) {
             String data = input.nextLine();
-            brokers.add(data);
+            String ip = data.split(":")[0];
+            int port = Integer.parseInt(data.split(":")[1]);
+            Broker broker = new Broker(ip, port);
+            brokers.add(broker);
         }
         return brokers;
     }
