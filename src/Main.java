@@ -1,10 +1,5 @@
-import Helpers.BusReader;
-import Models.Bus;
+import Helpers.BrokerProvider;
 
-import javax.xml.bind.DatatypeConverter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.*;
 import java.io.*;
 import java.lang.*;
 
@@ -34,9 +29,15 @@ public class Main {
 //        for (int port = 8080; port < 8080 + brokers; port++) {
 //            new Broker(port).start();
 //        }
-        new Broker(8080).start();
+//        new Broker(8080).start();
 //
 //        new Publisher().start();
+
+        for (String broker : BrokerProvider.fetchBrokers()) {
+            String ip = broker.split(":")[0];
+            int port = Integer.parseInt(broker.split(":")[1]);
+            new Broker(ip, port).start();
+        }
 
     }
 }
