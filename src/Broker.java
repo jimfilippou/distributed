@@ -1,11 +1,10 @@
 import Models.Stigma;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class Broker implements Runnable {
 
@@ -16,40 +15,52 @@ public class Broker implements Runnable {
         this._port = port;
     }
 
-    private void _startListening() {
-        ServerSocket providerSocket = null;
-        Socket connection = null;
-        try {
-            InetAddress addr = InetAddress.getByName("192.168.1.18");
-            providerSocket = new ServerSocket(this._port, 50, addr);
-            System.out.println("Broker started at:" + addr +  ":" + this._port);
-            while (true) {
-                connection = providerSocket.accept();
-                ObjectOutputStream out = new ObjectOutputStream(connection.getOutputStream());
-                ObjectInputStream in = new ObjectInputStream(connection.getInputStream());
-
-                System.out.println((Stigma) in.readObject());
-
-                in.close();
-                out.close();
-                connection.close();
-            }
-        } catch (IOException | ClassNotFoundException err) {
-            err.printStackTrace();
-        } finally {
+    private void _startSender() {
+        (new Thread(() -> {
             try {
-                if (providerSocket != null) {
-                    providerSocket.close();
+                Socket s = new Socket("192.168.1.19", 8080);
+                BufferedWriter out = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
+
+                while (true) {
+                    out.write("Hello World!");
+                    out.newLine();
+                    out.flush();
+
+                    Thread.sleep(200);
                 }
-            } catch (IOException err) {
-                err.printStackTrace();
+
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
             }
-        }
+        })).start();
+    }
+
+    private void _startServer() {
+        (new Thread(() -> {
+            ServerSocket providerSocket = null;
+            try {
+                InetAddress addr = InetAddress.getByName("192.168.1.19");
+                providerSocket = new ServerSocket(this._port, 50, addr);
+                System.out.println("Broker started at:" + addr +  ":" + this._port);
+                Socket s = providerSocket.accept();
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(s.getInputStream()));
+                String line = null;
+                while ((line = in.readLine()) != null) {
+                    System.out.println(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        })).start();
     }
 
     @Override
     public void run() {
-        this._startListening();
+        System.out.println("Starting server...");
+        this._startServer();
+        System.out.println("Starting sender...");
+        this._startSender();
     }
 
     public void start() {
