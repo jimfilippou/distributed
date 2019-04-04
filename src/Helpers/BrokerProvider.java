@@ -14,7 +14,7 @@ public class BrokerProvider {
     public static List<Broker> fetchBrokers() {
         Scanner input = null;
         try {
-            input = new Scanner(new File("/Users/jimfilippou/Projects/distributed/src/Data/brokers.txt"));
+            input = new Scanner(new File("/home/p3160253/IdeaProjects/distributed/src/Data/brokers.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

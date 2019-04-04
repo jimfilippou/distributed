@@ -1,4 +1,3 @@
-import Helpers.BrokerProvider;
 import Models.Broker;
 
 import java.io.*;
@@ -8,14 +7,14 @@ import java.net.Socket;
 
 public class BrokerThread implements Runnable {
 
-    private Broker _broker;
-    private Thread _t;
+    private Broker broker;
+    private Thread t;
 
     public BrokerThread(Broker broker) {
-        this._broker = broker;
+        this.broker = broker;
     }
 
-//    private void _startSender() {
+//    private void startSender() {
 //        (new Thread(() -> {
 //            try {
 //                for (Broker broker : BrokerProvider.fetchBrokers()) {
@@ -32,13 +31,13 @@ public class BrokerThread implements Runnable {
 //        })).start();
 //    }
 
-    private void _startServer() {
+    private void startServer() {
         (new Thread(() -> {
             ServerSocket providerSocket = null;
             try {
-                InetAddress addr = InetAddress.getByName("192.168.1.19");
-                providerSocket = new ServerSocket(this._broker.getPort(), 50, addr);
-                System.out.println("BrokerThread started at:" + addr + ":" + this._broker.getPort());
+                InetAddress addr = InetAddress.getByName(this.broker.getIP());
+                providerSocket = new ServerSocket(this.broker.getPort(), 50, addr);
+                System.out.println("BrokerThread started at:" + addr + ":" + this.broker.getPort());
                 Socket s = providerSocket.accept();
                 BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
 //                ObjectOutputStream objectOutput = new ObjectOutputStream(s.getOutputStream());
@@ -55,16 +54,16 @@ public class BrokerThread implements Runnable {
     @Override
     public void run() {
         System.out.println("Starting server...");
-        this._startServer();
+        this.startServer();
 //        System.out.println("Starting sender...");
-//        this._startSender();
+//        this.startSender();
     }
 
     public void start() {
-        String _thread_name = "THREAD" + this._broker.getPort();
-        Thread thread = this._t;
+        String threadname = "THREAD" + this.broker.getPort();
+        Thread thread = this.t;
         if (thread == null) {
-            thread = new Thread(this, _thread_name);
+            thread = new Thread(this, threadname);
             thread.start();
         }
     }

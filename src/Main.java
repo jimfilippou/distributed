@@ -1,5 +1,6 @@
 import Helpers.BrokerProvider;
 import Models.Broker;
+import Models.Publisher;
 
 import java.io.*;
 import java.lang.*;
@@ -19,7 +20,8 @@ public class Main {
             new BrokerThread(broker).start();
         }
 
-//        new PublisherThread().start();
+        Publisher publisher = new Publisher("172.16.2.21", 9090);
+        new PublisherThread(publisher).start();
 
     }
 }

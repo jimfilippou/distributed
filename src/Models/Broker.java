@@ -1,7 +1,5 @@
 package Models;
 
-import Helpers.BrokerProvider;
-
 import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -9,51 +7,56 @@ import java.util.HashMap;
 
 public class Broker {
 
-    private String _ip;
-    private String _hash;
-    private int _port;
-    private HashMap<String, Broker> _hashes = new HashMap<String, Broker>();
+    private String ip;
+    private String hash;
+    private int port;
+    private HashMap<String, Broker> hashes = new HashMap<String, Broker>();
 
     public String getIP() {
-        return _ip;
+        return ip;
     }
 
-    public void setIP(String _ip) {
-        this._ip = _ip;
+    public void setIP(String ip) {
+        this.ip = ip;
     }
 
     public int getPort() {
-        return _port;
+        return port;
     }
 
-    public void setPort(int _port) {
-        this._port = _port;
+    public void setPort(int port) {
+        this.port = port;
     }
 
     public String getHash() {
-        return _hash;
+        return hash;
     }
 
-    public void setHash(String _hash) {
-        this._hash = _hash;
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 
     public HashMap<String, Broker> getHashes() {
-        return _hashes;
+        return hashes;
     }
 
-    public void setHashes(HashMap<String, Broker> _hashes) {
-        this._hashes = _hashes;
+    public void setHashes(HashMap<String, Broker> hashes) {
+        this.hashes = hashes;
     }
 
 
+    /**
+     * Constructor
+     * @param ip
+     * @param port
+     */
     public Broker(String ip, int port) {
-        this._ip = ip;
-        this._port = port;
-        this._hash = this._hashThis(ip.concat(String.valueOf(port)));
+        this.ip = ip;
+        this.port = port;
+        this.hash = this.hashThis(ip.concat(String.valueOf(port)));
     }
 
-    private String _hashThis(String toHash) {
+    private String hashThis(String toHash) {
         String resp = "";
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
