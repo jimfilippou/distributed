@@ -4,7 +4,6 @@ import Models.Publisher;
 
 import java.io.*;
 import java.lang.*;
-import java.util.HashMap;
 
 
 public class Main {
@@ -20,7 +19,7 @@ public class Main {
 //        broker.setHashes(sharedHashmap);
 
         for (Broker broker : BrokerProvider.fetchBrokers()) {
-            new BrokerThread(broker).start();
+            new BrokerEntity(broker).start();
         }
 
 

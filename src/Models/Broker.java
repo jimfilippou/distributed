@@ -44,12 +44,6 @@ public class Broker {
         this.hashes = hashes;
     }
 
-
-    /**
-     * Constructor
-     * @param ip
-     * @param port
-     */
     public Broker(String ip, int port) {
         this.ip = ip;
         this.port = port;
