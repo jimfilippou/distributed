@@ -2,10 +2,7 @@ import Helpers.BrokerProvider;
 import Models.Broker;
 
 import java.io.*;
-import java.net.ConnectException;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 
 public class BrokerThread implements Runnable {
 
@@ -18,28 +15,26 @@ public class BrokerThread implements Runnable {
 
     private void startSender() {
 
-            (new Thread(() -> {
-                try {
-                    while (true) {
-                        //Thread.sleep(500);
-                        for (Broker broker : BrokerProvider.fetchBrokers()) {
-                            if (broker.getIP().equals("172.16.2.22")) continue;
-                            BufferedWriter out;
-                            try (Socket s = new Socket(broker.getIP(), broker.getPort())) {
-                                out = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
-                                out.write(broker.getHash());
-                                out.newLine();
-                                out.flush();
-                            } catch (ConnectException err) {
-                                // Connection failed because not all brokers on the txt are up
-                            }
-                        }
-
+        while (true) {
+            //Thread.sleep(500);
+            for (Broker broker : BrokerProvider.fetchBrokers()) {
+                if (broker.getIP().equals("172.16.2.21")) continue;
+                (new Thread(() -> {
+                    BufferedWriter out;
+                    try (Socket s = new Socket(broker.getIP(), broker.getPort())) {
+                        out = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
+                        out.write(broker.getHash());
+                        out.newLine();
+                        out.flush();
+                    } catch (ConnectException err) {
+                        // Connection failed because not all brokers on the txt are up
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            })).start();
+                })).start();
+            }
+
+        }
 
     }
 
@@ -64,7 +59,7 @@ public class BrokerThread implements Runnable {
 
     @Override
     public void run() {
-        if (broker.getIP().equals("172.16.2.22")) {
+        if (broker.getIP().equals("172.16.2.21")) {
             System.out.println("Starting server...");
             this.startServer();
             System.out.println("Starting sender...");
