@@ -2,6 +2,7 @@ import Helpers.BrokerProvider;
 import Models.Broker;
 
 import java.io.*;
+import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -18,16 +19,23 @@ public class BrokerThread implements Runnable {
     private void startSender() {
         (new Thread(() -> {
             try {
-                for (Broker broker: BrokerProvider.fetchBrokers()) {
-                    if (broker.getIP().equals("172.16.2.21")) continue;
-                    Socket s = new Socket(broker.getIP(), broker.getPort());
-                    BufferedWriter out = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
-                    out.write(this.broker.getHash());
-                    out.newLine();
-                    out.flush();
+                while (true) {
+                    Thread.sleep(500);
+                    for (Broker broker : BrokerProvider.fetchBrokers()) {
+                        if (broker.getIP().equals("172.16.2.21")) continue;
+                        BufferedWriter out;
+                        try (Socket s = new Socket(broker.getIP(), broker.getPort())) {
+                            out = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
+                            out.write(this.broker.getHash());
+                            out.newLine();
+                            out.flush();
+                        } catch (ConnectException err) {
+                            // Connection failed because not all brokers on the txt are up
+                        }
+                    }
                 }
 
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
         })).start();
