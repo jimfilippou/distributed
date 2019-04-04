@@ -1,3 +1,4 @@
+import Helpers.BrokerProvider;
 import Models.Broker;
 
 import java.io.*;
@@ -14,22 +15,23 @@ public class BrokerThread implements Runnable {
         this.broker = broker;
     }
 
-//    private void startSender() {
-//        (new Thread(() -> {
-//            try {
-//                for (Broker broker : BrokerProvider.fetchBrokers()) {
-//                    Socket s = new Socket(broker.getIP(), 9090);
-//                    BufferedWriter out = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
-//                    out.write(broker.getHash());
-//                    out.newLine();
-//                    out.flush();
-//                }
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        })).start();
-//    }
+    private void startSender() {
+        (new Thread(() -> {
+            try {
+                for (Broker broker: BrokerProvider.fetchBrokers()) {
+                    if (broker.getIP().equals("172.16.2.21")) continue;
+                    Socket s = new Socket(broker.getIP(), broker.getPort());
+                    BufferedWriter out = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
+                    out.write(this.broker.getHash());
+                    out.newLine();
+                    out.flush();
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        })).start();
+    }
 
     private void startServer() {
         (new Thread(() -> {
@@ -40,7 +42,6 @@ public class BrokerThread implements Runnable {
                 System.out.println("BrokerThread started at:" + addr + ":" + this.broker.getPort());
                 Socket s = providerSocket.accept();
                 BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-//                ObjectOutputStream objectOutput = new ObjectOutputStream(s.getOutputStream());
                 String line = null;
                 while ((line = in.readLine()) != null) {
                     System.out.println(line);
@@ -53,10 +54,16 @@ public class BrokerThread implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Starting server...");
-        this.startServer();
-//        System.out.println("Starting sender...");
-//        this.startSender();
+        if (broker.getIP().equals("172.16.2.21")) {
+            System.out.println("Starting server...");
+            this.startServer();
+            System.out.println("Starting sender...");
+            this.startSender();
+        } else {
+            System.out.println("Starting sender...");
+            this.startSender();
+        }
+
     }
 
     public void start() {
