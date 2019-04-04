@@ -5,6 +5,7 @@ import Models.Broker;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,7 +15,7 @@ public class BrokerProvider {
     public static List<Broker> fetchBrokers() {
         Scanner input = null;
         try {
-            input = new Scanner(new File("/home/p3160253/IdeaProjects/distributed/src/Data/brokers.txt"));
+            input = new Scanner(new File("C:\\Users\\p3150127\\IdeaProjects\\distributed\\src\\Data\\brokers.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
