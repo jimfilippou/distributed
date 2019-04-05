@@ -25,4 +25,5 @@ public class Publisher {
         this.ip = ip;
         this.port = port;
     }
+
 }

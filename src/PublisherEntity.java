@@ -5,12 +5,12 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class PublisherThread implements Runnable {
+public class PublisherEntity implements Runnable {
 
     private Thread t;
     private Publisher publisher;
 
-    public PublisherThread(Publisher publisher) {
+    public PublisherEntity(Publisher publisher) {
         this.publisher = publisher;
     }
 
@@ -22,7 +22,7 @@ public class PublisherThread implements Runnable {
         Thread thread = this.t;
         if (thread == null) {
             thread = new Thread(this);
-            System.out.println("PublisherThread started");
+            System.out.println("PublisherEntity started");
             thread.start();
         }
     }

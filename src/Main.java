@@ -1,8 +1,6 @@
 import Helpers.BrokerProvider;
 import Models.Broker;
-import Models.Publisher;
 
-import java.io.*;
 import java.lang.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +8,7 @@ import java.util.List;
 
 public class Main {
 
-    static final String myIP = "172.16.2.21";
-
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
 
 //        HashMap<String, Broker> sharedHashmap = new HashMap<String, Broker>();
 //        for (Broker broker: BrokerProvider.fetchBrokers()){
@@ -30,15 +26,13 @@ public class Main {
         }
 
         // Start brokers
-        for(BrokerEntity brokerEntity: brokers){
+        for (BrokerEntity brokerEntity : brokers) {
             brokerEntity.startSender();
         }
 
 
-
-
 //        Publisher publisher = new Publisher("172.16.2.21", 9090);
-//        new PublisherThread(publisher).start();
+//        new PublisherEntity(publisher).start();
 
     }
 }

@@ -4,15 +4,15 @@ import Models.Broker;
 import java.io.*;
 import java.net.*;
 
-public class BrokerEntity {
+class BrokerEntity {
 
     private Broker broker;
 
-    public BrokerEntity(Broker broker) {
+    BrokerEntity(Broker broker) {
         this.broker = broker;
     }
 
-    public void startSender() {
+    void startSender() {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -42,14 +42,14 @@ public class BrokerEntity {
 
         private Broker broker;
 
-        public ClientHandler(Broker broker) {
+        ClientHandler(Broker broker) {
             this.broker = broker;
         }
 
         public void run() {
-            ServerSocket providerSocket = null;
-            Socket connection = null;
-            InetAddress addr = null;
+            ServerSocket providerSocket;
+            Socket connection;
+            InetAddress addr;
             try {
                 addr = InetAddress.getByName(this.broker.getIP());
                 providerSocket = new ServerSocket(this.broker.getPort(), 50, addr);
@@ -70,7 +70,7 @@ public class BrokerEntity {
 
     }
 
-    public void start() {
+    void start() {
         this.startServer();
     }
 }

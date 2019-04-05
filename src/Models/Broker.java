@@ -4,13 +4,16 @@ import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.List;
 
 public class Broker {
 
     private String ip;
     private String hash;
     private int port;
-    private HashMap<String, Broker> hashes = new HashMap<String, Broker>();
+    private HashMap<String, Broker> hashes;
+    private List<Publisher> registeredPublishers;
+    private List<Subscriber> registeredSubscribers;
 
     public String getIP() {
         return ip;
@@ -42,6 +45,22 @@ public class Broker {
 
     public void setHashes(HashMap<String, Broker> hashes) {
         this.hashes = hashes;
+    }
+
+    public List<Publisher> getRegisteredPublishers() {
+        return registeredPublishers;
+    }
+
+    public void setRegisteredPublishers(List<Publisher> registeredPublishers) {
+        this.registeredPublishers = registeredPublishers;
+    }
+
+    public List<Subscriber> getRegisteredSubscribers() {
+        return registeredSubscribers;
+    }
+
+    public void setRegisteredSubscribers(List<Subscriber> registeredSubscribers) {
+        this.registeredSubscribers = registeredSubscribers;
     }
 
     public Broker(String ip, int port) {

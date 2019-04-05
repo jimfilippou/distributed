@@ -2,9 +2,9 @@ package Models;
 
 public class Bus {
 
-    public String lineNumber;
-    public String lineName;
-    public String busLineID;
+    private String lineNumber;
+    private String lineName;
+    private String busLineID;
 
     private String _routeCode;
     private String _vehicleId;
