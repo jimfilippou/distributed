@@ -28,7 +28,7 @@ public class BrokerEntity {
                 out.writeUTF(this.broker.getHash());
                 out.flush();
             } catch (Exception err) {
-                System.err.println(this.broker.toString() + " Tried to connect to -> " + broker.toString() + " But failed.");
+                System.err.println(this.broker.toString() + " Tried to connect to -> " + broker.toString() + " But was down.");
             }
         }
     }
