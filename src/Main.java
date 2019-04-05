@@ -24,8 +24,8 @@ public class Main {
 
 
 
-        Publisher publisher = new Publisher("172.16.2.21", 9090);
-        new PublisherThread(publisher).start();
+//        Publisher publisher = new Publisher("172.16.2.21", 9090);
+//        new PublisherThread(publisher).start();
 
     }
 }

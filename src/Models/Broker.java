@@ -62,4 +62,9 @@ public class Broker {
         }
         return resp;
     }
+
+    @Override
+    public String toString() {
+        return "Broker " + this.getIP() + ":" + this.getPort();
+    }
 }

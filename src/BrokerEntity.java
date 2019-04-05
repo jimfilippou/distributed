@@ -13,17 +13,22 @@ public class BrokerEntity {
     }
 
     private void startSender() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         for (Broker broker : BrokerProvider.fetchBrokers()) {
-            BufferedWriter out;
-            try (Socket s = new Socket(broker.getIP(), broker.getPort())) {
-                out = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
-                out.write(broker.getHash());
-                out.newLine();
+            try {
+                Socket requestSocket;
+                ObjectOutputStream out;
+                requestSocket = new Socket(InetAddress.getByName(broker.getIP()), broker.getPort());
+                out = new ObjectOutputStream(requestSocket.getOutputStream());
+                System.out.println(this.broker.toString() + " Sent -> " + this.broker.getHash());
+                out.writeUTF(this.broker.getHash());
                 out.flush();
-            } catch (ConnectException err) {
-                // Connection failed because not all brokers on the txt are up
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception err) {
+                System.err.println(this.broker.toString() + " Tried to connect to -> " + broker.toString() + " But failed.");
             }
         }
     }
@@ -43,18 +48,19 @@ public class BrokerEntity {
 
         public void run() {
             ServerSocket providerSocket = null;
+            Socket connection = null;
             InetAddress addr = null;
             try {
                 addr = InetAddress.getByName(this.broker.getIP());
                 providerSocket = new ServerSocket(this.broker.getPort(), 50, addr);
-                Socket s = null;
-                s = providerSocket.accept();
                 while (true) {
-                    BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-                    String line = null;
-                    while ((line = in.readLine()) != null) {
-                        System.out.println(line);
-                    }
+                    connection = providerSocket.accept();
+                    ObjectOutputStream out = new ObjectOutputStream(connection.getOutputStream());
+                    ObjectInputStream in = new ObjectInputStream(connection.getInputStream());
+                    System.out.println(this.broker.toString() + " Received -> " + in.readUTF());
+                    in.close();
+                    out.close();
+                    connection.close();
                 }
             } catch (Exception err) {
                 err.printStackTrace();
@@ -64,11 +70,8 @@ public class BrokerEntity {
 
     }
 
-
     public void start() {
-        System.out.println("Broker " + broker.getIP() + ":" + broker.getPort() + " -> Started server.");
         this.startServer();
-        System.out.println("Broker " + broker.getIP() + ":" + broker.getPort() + " -> Started client.");
         this.startSender();
     }
 }
