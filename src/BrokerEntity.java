@@ -12,7 +12,7 @@ public class BrokerEntity {
         this.broker = broker;
     }
 
-    private void startSender() {
+    public void startSender() {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -72,6 +72,5 @@ public class BrokerEntity {
 
     public void start() {
         this.startServer();
-        this.startSender();
     }
 }

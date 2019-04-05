@@ -4,6 +4,8 @@ import Models.Publisher;
 
 import java.io.*;
 import java.lang.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Main {
@@ -18,9 +20,20 @@ public class Main {
 //        }
 //        broker.setHashes(sharedHashmap);
 
+        List<BrokerEntity> brokers = new ArrayList<BrokerEntity>();
+
+        // Create brokers
         for (Broker broker : BrokerProvider.fetchBrokers()) {
-            new BrokerEntity(broker).start();
+            BrokerEntity x = new BrokerEntity(broker);
+            x.start();
+            brokers.add(x);
         }
+
+        // Start brokers
+        for(BrokerEntity brokerEntity: brokers){
+            brokerEntity.startSender();
+        }
+
 
 
 
