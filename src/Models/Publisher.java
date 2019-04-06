@@ -2,9 +2,6 @@ package Models;
 
 import Helpers.Hash;
 
-import javax.xml.bind.DatatypeConverter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +9,22 @@ public class Publisher {
 
     private String ip;
     private int port;
+
+    public List<Integer> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<Integer> topics) {
+        this.topics = topics;
+    }
+
     private List<Integer> topics = new ArrayList<>();
 
-    public String getIp() {
+    public String getIP() {
         return ip;
     }
 
-    public void setIp(String ip) {
+    public void setIP(String ip) {
         this.ip = ip;
     }
 
@@ -41,6 +47,11 @@ public class Publisher {
 
     public void addTopic(int topic) {
         this.topics.add(topic);
+    }
+
+    @Override
+    public String toString() {
+        return "Publisher " + this.getIP() + ":" + this.getPort();
     }
 
 }

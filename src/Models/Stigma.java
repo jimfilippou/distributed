@@ -33,6 +33,6 @@ public class Stigma implements Serializable {
 
     @Override
     public String toString() {
-        return "Stigma{" + this.lat + ", " + this.lng + "}";
+        return "S{" + this.lat + ", " + this.lng + "}";
     }
 }

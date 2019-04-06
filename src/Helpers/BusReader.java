@@ -22,25 +22,24 @@ public class BusReader {
             String lineNumber = data.split(",")[0];
             String busLineID = data.split(",")[1];
             String lineName = data.split(",")[2];
-            Models.Bus bus = new Models.Bus(lineNumber, busLineID, lineName);
+            Bus bus = new Bus(lineNumber, busLineID, lineName);
             buses.add(bus);
         }
         return buses;
     }
 
-    public static HashMap<Integer, Stigma> readBusPositions(int busID) throws FileNotFoundException {
-        Scanner input = new Scanner(new File("Users/jimfilippou/Projects/distributed/src/Data/busPositions.txtz"));
+    public static ArrayList<Stigma> readBusPositions(int busID) throws FileNotFoundException {
+        Scanner input = new Scanner(new File("/Users/jimfilippou/Projects/distributed/src/Data/busPositions.txt"));
         input.useDelimiter("-\n");
-        HashMap<Integer, Stigma> response = new HashMap<>();
+        ArrayList<Stigma> response = new ArrayList<>();
         while (input.hasNextLine()) {
-            String data = input.nextLine();
-            String busId = data.split(",")[0];
-            String x = data.split(",")[3];
-            String y = data.split(",")[4];
-            String timestamp = data.split(",")[5];
+            String[] data = input.nextLine().split(",");
+            String busId = data[0];
+            double x = Double.valueOf(data[3]);
+            double y = Double.valueOf(data[4]);
+            String timestamp = data[5];
             if (String.valueOf(busID).equals(busId)) {
-                Stigma stigma = new Stigma(Double.valueOf(x), Double.valueOf(y), timestamp);
-                response.put(Integer.parseInt(busId), stigma);
+                response.add(new Stigma(x, y, timestamp));
             }
         }
         return response;
