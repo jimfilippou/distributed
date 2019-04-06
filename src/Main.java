@@ -30,7 +30,6 @@ public class Main {
             brokerEntity.startSender();
         }
 
-
 //        Publisher publisher = new Publisher("172.16.2.21", 9090);
 //        new PublisherEntity(publisher).start();
 

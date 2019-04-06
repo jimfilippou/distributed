@@ -1,8 +1,7 @@
 package Models;
 
-import javax.xml.bind.DatatypeConverter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import Helpers.Hash;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -70,20 +69,12 @@ public class Broker {
     }
 
     private String hashThis(String toHash) {
-        String resp = "";
-        try {
-            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-            messageDigest.update(toHash.getBytes());
-            byte[] digest = messageDigest.digest();
-            resp = DatatypeConverter.printHexBinary(digest);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return resp;
+        return Hash.hashWithMD5(toHash);
     }
 
     @Override
     public String toString() {
         return "Broker " + this.getIP() + ":" + this.getPort();
     }
+
 }
