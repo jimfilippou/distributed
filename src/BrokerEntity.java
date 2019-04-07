@@ -37,7 +37,6 @@ class BrokerEntity {
         new ClientHandler(this.broker).start();
     }
 
-
     class ClientHandler extends Thread {
 
         private Broker broker;

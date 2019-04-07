@@ -3,7 +3,9 @@ package Models;
 import Helpers.Hash;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Broker {
 
@@ -13,53 +15,34 @@ public class Broker {
     private HashMap<String, Broker> hashes;
     private List<Publisher> registeredPublishers;
     private List<Subscriber> registeredSubscribers;
+    private HashMap<Integer, Queue<Stigma>> data = new HashMap<>();
 
     public String getIP() {
         return ip;
-    }
-
-    public void setIP(String ip) {
-        this.ip = ip;
     }
 
     public int getPort() {
         return port;
     }
 
-    public void setPort(int port) {
-        this.port = port;
-    }
-
     public String getHash() {
         return hash;
-    }
-
-    public void setHash(String hash) {
-        this.hash = hash;
     }
 
     public HashMap<String, Broker> getHashes() {
         return hashes;
     }
 
-    public void setHashes(HashMap<String, Broker> hashes) {
-        this.hashes = hashes;
-    }
-
     public List<Publisher> getRegisteredPublishers() {
         return registeredPublishers;
-    }
-
-    public void setRegisteredPublishers(List<Publisher> registeredPublishers) {
-        this.registeredPublishers = registeredPublishers;
     }
 
     public List<Subscriber> getRegisteredSubscribers() {
         return registeredSubscribers;
     }
 
-    public void setRegisteredSubscribers(List<Subscriber> registeredSubscribers) {
-        this.registeredSubscribers = registeredSubscribers;
+    public HashMap<Integer, Queue<Stigma>> getData() {
+        return data;
     }
 
     public Broker(String ip, int port) {
@@ -70,6 +53,15 @@ public class Broker {
 
     private String hashThis(String toHash) {
         return Hash.hashWithMD5(toHash);
+    }
+
+    public void receiveData(Integer topic, Stigma value){
+        if (this.data.get(topic) == null) {
+            this.data.put(topic, new LinkedList<>());
+            this.data.get(topic).add(value);
+        } else {
+            this.data.get(topic).add(value);
+        }
     }
 
     @Override
