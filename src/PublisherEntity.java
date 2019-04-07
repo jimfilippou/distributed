@@ -20,19 +20,23 @@ class PublisherEntity {
         try {
             for (int busID : this.publisher.getTopics()) {
                 for (Stigma stigma : BusReader.readBusPositions(busID)) {
-                    TimeUnit.SECONDS.sleep(5);
-                    if (this.data.get(busID) == null) {
-                        this.data.put(busID, new LinkedList<>());
-                        this.data.get(busID).add(stigma);
-                    } else {
-                        this.data.get(busID).add(stigma);
-                    }
+                    TimeUnit.SECONDS.sleep(3);
+                    push(busID, stigma);
                     System.out.println(this.publisher.toString() + " Got data from sensor -> " + busID + ": " + stigma);
                 }
             }
             System.out.println(data);
         } catch (Exception err) {
             err.printStackTrace();
+        }
+    }
+
+    private void push(int topic, Stigma value) {
+        if (this.data.get(topic) == null) {
+            this.data.put(topic, new LinkedList<>());
+            this.data.get(topic).add(value);
+        } else {
+            this.data.get(topic).add(value);
         }
     }
 

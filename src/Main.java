@@ -34,7 +34,7 @@ public class Main {
         Publisher publisher = new Publisher("172.16.2.21", 9090);
         PublisherEntity publisherEntity = new PublisherEntity(publisher);
         publisherEntity.addTopic(821);
-        publisherEntity.addTopic(817);
+//        publisherEntity.addTopic(817);
         publisherEntity.start();
 
     }
