@@ -3,6 +3,7 @@ package Models;
 import Helpers.Hash;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Publisher {
@@ -21,11 +22,13 @@ public class Publisher {
         return ip;
     }
 
-
     public int getPort() {
         return port;
     }
 
+    public List<Broker> getBrokers() {
+        return brokers;
+    }
 
     public Publisher(String ip, int port) {
         this.ip = ip;

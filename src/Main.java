@@ -11,19 +11,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-//        HashMap<String, Broker> sharedHashmap = new HashMap<String, Broker>();
-//        for (Broker broker: BrokerProvider.fetchBrokers()){
-//            sharedHashmap.put(broker.getHash(), broker);
-//        }
-//        broker.setHashes(sharedHashmap);
-
-        List<BrokerEntity> brokers = new ArrayList<BrokerEntity>();
+        List<BrokerEntity> brokers = new ArrayList<>();
 
         // Create brokers
         for (Broker broker : BrokerProvider.fetchBrokers()) {
-            broker.addPublisher(new Publisher("172.16.2.11", 9090));
+            broker.addPublisher(new Publisher("192.168.1.2", 9090));
             BrokerEntity x = new BrokerEntity(broker);
-            x.start();
+            x.startServer();
             brokers.add(x);
         }
 
@@ -32,7 +26,7 @@ public class Main {
             brokerEntity.startSender();
         }
 
-        Publisher publisher = new Publisher("172.16.2.11", 9090);
+        Publisher publisher = new Publisher("192.168.1.2", 9090);
         new PublisherEntity(publisher).addTopic(821).start();
 
     }

@@ -9,7 +9,6 @@ public class Broker {
     private String ip;
     private String hash;
     private int port;
-    private HashMap<String, Broker> hashes;
     private List<Publisher> registeredPublishers = new ArrayList<>();
     private List<Subscriber> registeredSubscribers = new ArrayList<>();
     private HashMap<Integer, Queue<Stigma>> data = new HashMap<>();
@@ -24,10 +23,6 @@ public class Broker {
 
     public String getHash() {
         return hash;
-    }
-
-    public HashMap<String, Broker> getHashes() {
-        return hashes;
     }
 
     public List<Publisher> getRegisteredPublishers() {

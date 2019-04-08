@@ -1,5 +1,6 @@
 import Helpers.BrokerProvider;
 import Models.Broker;
+import Models.Publisher;
 
 import java.io.*;
 import java.net.*;
@@ -18,58 +19,48 @@ class BrokerEntity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        for (Broker broker : BrokerProvider.fetchBrokers()) {
-            try {
-                Socket requestSocket;
-                ObjectOutputStream out;
-                requestSocket = new Socket(InetAddress.getByName(broker.getIP()), broker.getPort());
-                out = new ObjectOutputStream(requestSocket.getOutputStream());
-                System.out.println(this.broker.toString() + " Sent -> " + this.broker.getHash());
-                out.writeUTF(this.broker.getHash());
-                out.flush();
-            } catch (Exception err) {
-                System.err.println(this.broker.toString() + " Tried to connect to -> " + broker.toString() + " But was down.");
-            }
+
+        // Send hash to other brokers
+//        for (Broker broker : BrokerProvider.fetchBrokers()) {
+//            sendMyHash(broker);
+//        }
+
+        // Send to every publisher, my hash along with myself
+        for (Publisher publisher : this.broker.getRegisteredPublishers()) {
+            sendMyHash(publisher);
         }
     }
 
-    private void startServer() {
-        new ClientHandler(this.broker).start();
-    }
-
-    class ClientHandler extends Thread {
-
-        private Broker broker;
-
-        ClientHandler(Broker broker) {
-            this.broker = broker;
+    private void sendMyHash(Publisher publisher) {
+        try {
+            Socket requestSocket;
+            ObjectOutputStream out;
+            requestSocket = new Socket(InetAddress.getByName(publisher.getIP()), publisher.getPort());
+            out = new ObjectOutputStream(requestSocket.getOutputStream());
+            System.out.println(this.broker.toString() + " Sent -> " + this.broker.getHash());
+            out.writeUnshared(this.broker);
+            out.flush();
+        } catch (Exception err) {
+            System.err.println(this.broker.toString() + " Tried to connect to -> " + publisher.toString() + " But was down.");
         }
+    }
 
-        public void run() {
-            ServerSocket providerSocket;
-            Socket connection;
-            InetAddress addr;
-            try {
-                addr = InetAddress.getByName(this.broker.getIP());
-                providerSocket = new ServerSocket(this.broker.getPort(), 50, addr);
-                while (true) {
-                    connection = providerSocket.accept();
-                    ObjectOutputStream out = new ObjectOutputStream(connection.getOutputStream());
-                    ObjectInputStream in = new ObjectInputStream(connection.getInputStream());
-                    System.out.println(this.broker.toString() + " Received -> " + in.readUTF());
-                    in.close();
-                    out.close();
-                    connection.close();
-                }
-            } catch (Exception err) {
-                err.printStackTrace();
-            }
-
+    private void sendMyHash(Broker broker) {
+        try {
+            Socket requestSocket;
+            ObjectOutputStream out;
+            requestSocket = new Socket(InetAddress.getByName(broker.getIP()), broker.getPort());
+            out = new ObjectOutputStream(requestSocket.getOutputStream());
+            System.out.println(this.broker.toString() + " Sent -> " + this.broker.getHash());
+            out.writeUTF(this.broker.getHash());
+            out.flush();
+        } catch (Exception err) {
+            System.err.println(this.broker.toString() + " Tried to connect to -> " + broker.toString() + " But was down.");
         }
-
     }
 
-    void start() {
-        this.startServer();
+    void startServer() {
+        new BrokerHandler(this.broker).start();
     }
+
 }
