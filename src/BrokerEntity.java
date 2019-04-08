@@ -21,9 +21,9 @@ class BrokerEntity {
         }
 
         // Send hash to other brokers
-//        for (Broker broker : BrokerProvider.fetchBrokers()) {
-//            sendMyHash(broker);
-//        }
+        for (Broker broker : BrokerProvider.fetchBrokers()) {
+            sendMyHash(broker);
+        }
 
         // Send to every publisher, my hash along with myself
         for (Publisher publisher : this.broker.getRegisteredPublishers()) {
