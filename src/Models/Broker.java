@@ -2,10 +2,7 @@ package Models;
 
 import Helpers.Hash;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class Broker {
 
@@ -13,8 +10,8 @@ public class Broker {
     private String hash;
     private int port;
     private HashMap<String, Broker> hashes;
-    private List<Publisher> registeredPublishers;
-    private List<Subscriber> registeredSubscribers;
+    private List<Publisher> registeredPublishers = new ArrayList<>();
+    private List<Subscriber> registeredSubscribers = new ArrayList<>();
     private HashMap<Integer, Queue<Stigma>> data = new HashMap<>();
 
     public String getIP() {
@@ -55,13 +52,17 @@ public class Broker {
         return Hash.hashWithMD5(toHash);
     }
 
-    public void receiveData(Integer topic, Stigma value){
+    public void receiveData(Integer topic, Stigma value) {
         if (this.data.get(topic) == null) {
             this.data.put(topic, new LinkedList<>());
             this.data.get(topic).add(value);
         } else {
             this.data.get(topic).add(value);
         }
+    }
+
+    public void addPublisher(Publisher publisher) {
+        this.registeredPublishers.add(publisher);
     }
 
     @Override

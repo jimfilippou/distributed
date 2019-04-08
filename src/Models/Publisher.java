@@ -9,13 +9,10 @@ public class Publisher {
 
     private String ip;
     private int port;
+    private List<Broker> brokers = new ArrayList<>();
 
     public List<Integer> getTopics() {
         return topics;
-    }
-
-    public void setTopics(List<Integer> topics) {
-        this.topics = topics;
     }
 
     private List<Integer> topics = new ArrayList<>();
@@ -24,17 +21,11 @@ public class Publisher {
         return ip;
     }
 
-    public void setIP(String ip) {
-        this.ip = ip;
-    }
 
     public int getPort() {
         return port;
     }
 
-    public void setPort(int port) {
-        this.port = port;
-    }
 
     public Publisher(String ip, int port) {
         this.ip = ip;
