@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Stigma implements Serializable {
 
@@ -22,7 +23,7 @@ public class Stigma implements Serializable {
     private void setTimestamp(String time) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat(
-                    "MMM  d yyyy hh:mm:ss:SSSa"
+                    "MMM  d yyyy hh:mm:ss:SSSa", Locale.ENGLISH
             );
             Date parsedDate = dateFormat.parse(time);
             this.timestamp = new Timestamp(parsedDate.getTime());

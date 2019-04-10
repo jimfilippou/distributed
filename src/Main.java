@@ -15,7 +15,7 @@ public class Main {
 
         // Create brokers
         for (Broker broker : BrokerProvider.fetchBrokers()) {
-            broker.addPublisher(new Publisher("192.168.1.2", 9090));
+            broker.addPublisher(new Publisher("172.16.2.49", 9090));
             BrokerEntity x = new BrokerEntity(broker);
             x.startServer();
             brokers.add(x);
@@ -25,9 +25,6 @@ public class Main {
         for (BrokerEntity brokerEntity : brokers) {
             brokerEntity.startSender();
         }
-
-        Publisher publisher = new Publisher("192.168.1.2", 9090);
-        new PublisherEntity(publisher).addTopic(821).start();
 
     }
 }

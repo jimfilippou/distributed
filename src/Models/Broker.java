@@ -2,10 +2,12 @@ package Models;
 
 import Helpers.Hash;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Broker {
+public class Broker implements Serializable {
 
+    private static final long serialVersionUID = 578515438738407941L;
     private String ip;
     private String hash;
     private int port;

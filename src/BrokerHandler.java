@@ -1,5 +1,6 @@
 import Models.Broker;
 
+import java.io.EOFException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
@@ -25,7 +26,20 @@ public class BrokerHandler extends Thread {
                 connection = providerSocket.accept();
                 ObjectOutputStream out = new ObjectOutputStream(connection.getOutputStream());
                 ObjectInputStream in = new ObjectInputStream(connection.getInputStream());
-                System.out.println(this.broker.toString() + " Received -> " + in.readUTF());
+
+                try {
+                    System.out.println(this.broker.toString() + " Received -> " + in.readUTF());
+                } catch (EOFException err) {
+
+
+                }
+                try {
+                    System.out.println(this.broker.toString() + " Received -> " + in.readUnshared().toString());
+                } catch (EOFException err) {
+
+                }
+
+
                 in.close();
                 out.close();
                 connection.close();
