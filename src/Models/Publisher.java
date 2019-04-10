@@ -37,7 +37,7 @@ public class Publisher implements Serializable {
         this.port = port;
     }
 
-    private String hashThis(String toHash) {
+    public String hashThis(String toHash) {
         return Hash.hashWithMD5(toHash);
     }
 
