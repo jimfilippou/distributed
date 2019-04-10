@@ -23,20 +23,28 @@ class BrokerEntity {
 
         // Send hash to other brokers
         for (Broker broker : BrokerProvider.fetchBrokers()) {
-            sendMyHash((BrokerOrPublisher) broker);
+            sendMyHash(broker);
         }
 
         // Send to every publisher, my hash along with myself
         for (Publisher publisher : this.broker.getRegisteredPublishers()) {
-            sendMyHash((BrokerOrPublisher) publisher);
+            sendMyHash(publisher);
         }
     }
 
-    private void sendMyHash(BrokerOrPublisher entity) {
+    private void sendMyHash(Broker broker) {
+        socketSend(broker.getIP(), broker.getPort(), broker);
+    }
+
+    private void sendMyHash(Publisher publisher) {
+        socketSend(publisher.getIP(), publisher.getPort(), publisher);
+    }
+
+    private void socketSend(String ip, int port, Object object) {
         try {
             Socket requestSocket;
             ObjectOutputStream out;
-            requestSocket = new Socket(InetAddress.getByName(entity.getIP()), entity.getPort());
+            requestSocket = new Socket(InetAddress.getByName(ip), port);
             out = new ObjectOutputStream(requestSocket.getOutputStream());
             Wrapper<String> toSend = new Wrapper<>();
             toSend.data = this.broker.getHash();
@@ -44,13 +52,8 @@ class BrokerEntity {
             out.writeUnshared(toSend);
             out.flush();
         } catch (Exception err) {
-            System.err.println(this.broker.toString() + " Tried to connect to -> " + entity.toString() + " But was down.");
+            System.err.println(this.broker.toString() + " Tried to connect to -> " + object + " But was down.");
         }
-    }
-
-    interface BrokerOrPublisher {
-        String getIP();
-        Integer getPort();
     }
 
     void startServer() {

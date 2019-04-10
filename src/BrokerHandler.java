@@ -1,4 +1,5 @@
 import Models.Broker;
+import Models.Wrapper;
 
 import java.io.EOFException;
 import java.io.ObjectInputStream;
@@ -27,18 +28,8 @@ public class BrokerHandler extends Thread {
                 ObjectOutputStream out = new ObjectOutputStream(connection.getOutputStream());
                 ObjectInputStream in = new ObjectInputStream(connection.getInputStream());
 
-                try {
-                    System.out.println(this.broker.toString() + " Received -> " + in.readUTF());
-                } catch (EOFException err) {
-
-
-                }
-                try {
-                    System.out.println(this.broker.toString() + " Received -> " + in.readUnshared().toString());
-                } catch (EOFException err) {
-
-                }
-
+                Wrapper incoming = (Wrapper) in.readUnshared();
+                System.out.println(this.broker.toString() + " Received -> " + incoming);
 
                 in.close();
                 out.close();

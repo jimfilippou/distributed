@@ -1,11 +1,13 @@
 import Models.Broker;
 import Models.Publisher;
+import Models.Wrapper;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.WeakHashMap;
 
 public class PublisherHandler extends Thread {
 
@@ -28,10 +30,12 @@ public class PublisherHandler extends Thread {
                 connection = providerSocket.accept();
                 ObjectOutputStream out = new ObjectOutputStream(connection.getOutputStream());
                 ObjectInputStream in = new ObjectInputStream(connection.getInputStream());
-                Broker object = (Broker) in.readObject();
-                System.out.println(this.publisher.toString() + " Received -> " + object.toString());
+                Wrapper incoming = (Wrapper) in.readObject();
+                System.out.println(this.publisher.toString() + " Received -> " + incoming.data.toString());
                 synchronized (this) {
-                    this.publisher.getBrokers().add(object);
+                    if (incoming.data instanceof Broker) {
+                        this.publisher.getBrokers().add((Broker) incoming.data);
+                    }
                 }
                 in.close();
                 out.close();
