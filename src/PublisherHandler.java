@@ -1,4 +1,3 @@
-import Helpers.Hash;
 import Models.Broker;
 import Models.Publisher;
 
@@ -7,13 +6,12 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
 
 public class PublisherHandler extends Thread {
 
     private Publisher publisher;
 
-    PublisherHandler(Publisher publisher){
+    PublisherHandler(Publisher publisher) {
         this.publisher = publisher;
     }
 
@@ -32,7 +30,9 @@ public class PublisherHandler extends Thread {
                 ObjectInputStream in = new ObjectInputStream(connection.getInputStream());
                 Broker object = (Broker) in.readObject();
                 System.out.println(this.publisher.toString() + " Received -> " + object.toString());
-                this.publisher.getBrokers().add(object);
+                synchronized (this) {
+                    this.publisher.getBrokers().add(object);
+                }
                 in.close();
                 out.close();
                 connection.close();
