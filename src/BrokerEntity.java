@@ -46,8 +46,8 @@ class BrokerEntity {
             ObjectOutputStream out;
             requestSocket = new Socket(InetAddress.getByName(ip), port);
             out = new ObjectOutputStream(requestSocket.getOutputStream());
-            Wrapper<String> toSend = new Wrapper<>();
-            toSend.data = this.broker.getHash();
+            Wrapper<Broker> toSend = new Wrapper<>();
+            toSend.data = this.broker;
             System.out.println(this.broker.toString() + " Sent -> " + this.broker.getHash());
             out.writeUnshared(toSend);
             out.flush();

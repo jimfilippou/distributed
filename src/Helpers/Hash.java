@@ -19,7 +19,7 @@ public class Hash {
     }
 
     public static void main(String[] args) {
-        String broker = hashWithMD5("192.168.1.12");
+        String broker = hashWithMD5("192.168.1.4:8080");
         String busID = hashWithMD5(String.valueOf(820));
         System.out.println(broker);
         System.out.println(busID);

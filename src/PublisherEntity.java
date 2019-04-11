@@ -36,7 +36,8 @@ class PublisherEntity {
 
     private void push(int topic, Stigma value) {
         for (Broker broker : this.publisher.getBrokers()) {
-            if (publisher.hashThis(String.valueOf(topic)).compareTo(broker.getHash()) % 100 > 0) {
+            System.out.println("Checking " + broker.toString());
+            if (publisher.hashThis(String.valueOf(topic)).compareTo(broker.getHash()) > 0) {
                 sendToBroker(broker, value);
             }
         }
