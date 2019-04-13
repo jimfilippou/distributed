@@ -34,7 +34,7 @@ public class Consumer implements Serializable {
 
     @Override
     public String toString() {
-        return "Publisher " + this.getIP() + ":" + this.getPort();
+        return "Consumer " + this.getIP() + ":" + this.getPort();
     }
 
 }
