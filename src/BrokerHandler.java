@@ -1,4 +1,6 @@
+import Helpers.Hash;
 import Models.Broker;
+import Models.Consumer;
 import Models.Wrapper;
 
 import java.io.EOFException;
@@ -7,6 +9,8 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BrokerHandler extends Thread {
 
@@ -30,6 +34,13 @@ public class BrokerHandler extends Thread {
 
                 Wrapper incoming = (Wrapper) in.readUnshared();
                 System.out.println(this.broker.toString() + " Received -> " + incoming);
+
+                if (incoming.data instanceof HashMap) {
+                    Map.Entry entry = (Map.Entry) ((HashMap) incoming.data).entrySet().iterator().next();
+                    Consumer value = (Consumer) entry.getValue();
+                    this.broker.getRegisteredConsumers().add(value);
+                    System.out.println(this.broker + " Received registration event from " + value.toString());
+                }
 
                 in.close();
                 out.close();

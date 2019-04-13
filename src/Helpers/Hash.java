@@ -26,7 +26,7 @@ public class Hash {
         if (broker.compareTo(busID) > 0) {
             System.out.println("Broker bigger");
 
-        }else{
+        } else {
             System.out.println("smlaller");
         }
     }

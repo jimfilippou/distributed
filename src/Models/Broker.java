@@ -12,7 +12,7 @@ public class Broker implements Serializable {
     private String hash;
     private int port;
     private List<Publisher> registeredPublishers = new ArrayList<>();
-    private List<Subscriber> registeredSubscribers = new ArrayList<>();
+    private List<Consumer> registeredConsumers = new ArrayList<>();
     private HashMap<Integer, Queue<Stigma>> data = new HashMap<>();
 
     public String getIP() {
@@ -31,8 +31,8 @@ public class Broker implements Serializable {
         return registeredPublishers;
     }
 
-    public List<Subscriber> getRegisteredSubscribers() {
-        return registeredSubscribers;
+    public List<Consumer> getRegisteredConsumers() {
+        return registeredConsumers;
     }
 
     public HashMap<Integer, Queue<Stigma>> getData() {
@@ -47,15 +47,6 @@ public class Broker implements Serializable {
 
     private String hashThis(String toHash) {
         return Hash.hashWithMD5(toHash);
-    }
-
-    public void receiveData(Integer topic, Stigma value) {
-        if (this.data.get(topic) == null) {
-            this.data.put(topic, new LinkedList<>());
-            this.data.get(topic).add(value);
-        } else {
-            this.data.get(topic).add(value);
-        }
     }
 
     public void addPublisher(Publisher publisher) {

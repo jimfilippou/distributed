@@ -7,7 +7,6 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.WeakHashMap;
 
 public class PublisherHandler extends Thread {
 

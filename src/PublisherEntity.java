@@ -39,6 +39,7 @@ class PublisherEntity {
             System.out.println("Checking " + broker.toString());
             if (publisher.hashThis(String.valueOf(topic)).compareTo(broker.getHash()) > 0) {
                 sendToBroker(broker, value);
+                break;
             }
         }
     }
