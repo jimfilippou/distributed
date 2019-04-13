@@ -40,6 +40,9 @@ public class BrokerHandler extends Thread {
                     Consumer value = (Consumer) entry.getValue();
                     this.broker.getRegisteredConsumers().add(value);
                     System.out.println(this.broker + " Received registration event from " + value.toString());
+                } else {
+                    // Received stigma
+                    // TODO send this back to consumers
                 }
 
                 in.close();
