@@ -46,10 +46,7 @@ public class BrokerHandler extends Thread {
                     System.out.println(this.broker.toString() + " Received -> " + incoming.data);
                     for (Consumer consumer : this.broker.getRegisteredConsumers()) {
                         Integer incomingTopic = ((Stigma) (incoming.data)).getTopic();
-                        System.out.println(incomingTopic);
-                        System.out.println(consumer.getInterests());
                         if (consumer.getInterests().indexOf(incomingTopic) != -1) {
-                            System.out.println("SENDIN");
                             try {
                                 Socket requestSocket;
                                 ObjectOutputStream outWriter;

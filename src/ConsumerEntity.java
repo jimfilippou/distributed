@@ -21,6 +21,8 @@ public class ConsumerEntity {
             ObjectOutputStream out;
             requestSocket = new Socket(InetAddress.getByName(broker.getIP()), broker.getPort());
             out = new ObjectOutputStream(requestSocket.getOutputStream());
+            System.out.println("Adding " + topic.toString() + " to the interests list.");
+            this.consumer.addInterest(topic);
             Wrapper<HashMap<Integer, Consumer>> toSend = new Wrapper<>();
             toSend.data = new HashMap<>();
             toSend.data.put(topic, this.consumer);
@@ -29,9 +31,6 @@ public class ConsumerEntity {
             out.flush();
         } catch (Exception err) {
             System.err.println(this.consumer.toString() + " Tried to connect to -> " + broker.toString() + " But was down.");
-        } finally {
-            System.out.println("Adding " + topic.toString() + " to the interests list.");
-            this.consumer.addInterest(topic);
         }
     }
 
