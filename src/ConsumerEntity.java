@@ -15,7 +15,7 @@ public class ConsumerEntity {
         this.consumer = consumer;
     }
 
-    public ConsumerEntity register(Broker broker, Integer topic) {
+    void register(Broker broker, Integer topic) {
         try {
             Socket requestSocket;
             ObjectOutputStream out;
@@ -27,11 +27,12 @@ public class ConsumerEntity {
             System.out.println(this.consumer.toString() + " Sent registration event -> " + broker.toString());
             out.writeUnshared(toSend);
             out.flush();
-            this.consumer.addInterest(topic);
         } catch (Exception err) {
             System.err.println(this.consumer.toString() + " Tried to connect to -> " + broker.toString() + " But was down.");
+        } finally {
+            System.out.println("Adding " + topic.toString() + " to the interests list.");
+            this.consumer.addInterest(topic);
         }
-        return this;
     }
 
     public void disconnect(Broker broker, Integer topic) {

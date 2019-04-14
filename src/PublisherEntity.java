@@ -25,6 +25,7 @@ class PublisherEntity {
             for (int busID : this.publisher.getTopics()) {
                 for (Stigma stigma : BusReader.readBusPositions(busID)) {
                     TimeUnit.SECONDS.sleep(3);
+                    stigma.setTopic(busID);
                     push(busID, stigma);
                     System.out.println(this.publisher.toString() + " Got data from sensor -> " + busID + ": " + stigma);
                 }

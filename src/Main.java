@@ -31,9 +31,9 @@ public class Main {
                     .start();
         } else {
             Consumer consumer = new Consumer("192.168.1.4", 9091);
-            new ConsumerEntity(consumer)
-                    .register(new Broker("192.168.1.4", 8081), 821)
-                    .startListening();
+            ConsumerEntity consumerEntity = new ConsumerEntity(consumer);
+            consumerEntity.register(new Broker("192.168.1.4", 8081), 821);
+            consumerEntity.startListening();
         }
     }
 }

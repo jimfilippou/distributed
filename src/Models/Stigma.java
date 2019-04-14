@@ -12,6 +12,7 @@ public class Stigma implements Serializable {
     private static final long serialVersionUID = 578515438738407941L;
     private double lat;
     private double lng;
+    private Integer topic;
     private Timestamp timestamp;
 
     public Stigma(double lat, double lng, String timestamp) {
@@ -30,6 +31,14 @@ public class Stigma implements Serializable {
         } catch (ParseException err) {
             err.printStackTrace();
         }
+    }
+
+    public void setTopic(Integer topic) {
+        this.topic = topic;
+    }
+
+    public Integer getTopic() {
+        return topic;
     }
 
     @Override

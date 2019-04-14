@@ -1,6 +1,7 @@
 import Helpers.Hash;
 import Models.Broker;
 import Models.Consumer;
+import Models.Stigma;
 import Models.Wrapper;
 
 import java.io.EOFException;
@@ -33,7 +34,6 @@ public class BrokerHandler extends Thread {
                 ObjectInputStream in = new ObjectInputStream(connection.getInputStream());
 
                 Wrapper incoming = (Wrapper) in.readUnshared();
-                System.out.println(this.broker.toString() + " Received -> " + incoming);
 
                 if (incoming.data instanceof HashMap) {
                     Map.Entry entry = (Map.Entry) ((HashMap) incoming.data).entrySet().iterator().next();
@@ -43,6 +43,28 @@ public class BrokerHandler extends Thread {
                 } else {
                     // Received stigma
                     // TODO send this back to consumers
+                    System.out.println(this.broker.toString() + " Received -> " + incoming.data);
+                    for (Consumer consumer : this.broker.getRegisteredConsumers()) {
+                        Integer incomingTopic = ((Stigma) (incoming.data)).getTopic();
+                        System.out.println(incomingTopic);
+                        System.out.println(consumer.getInterests());
+                        if (consumer.getInterests().indexOf(incomingTopic) != -1) {
+                            System.out.println("SENDIN");
+                            try {
+                                Socket requestSocket;
+                                ObjectOutputStream outWriter;
+                                requestSocket = new Socket(InetAddress.getByName(consumer.getIP()), consumer.getPort());
+                                outWriter = new ObjectOutputStream(requestSocket.getOutputStream());
+                                Wrapper<Stigma> toSend = new Wrapper<>();
+                                toSend.data = ((Stigma) (incoming.data));
+                                System.out.println(this.broker.toString() + " Sent -> " + ((Stigma) (incoming.data)).toString());
+                                outWriter.writeUnshared(toSend);
+                                outWriter.flush();
+                            } catch (Exception err) {
+                                System.err.println(this.broker.toString() + " Tried to connect to -> " + consumer.toString() + " But was down.");
+                            }
+                        }
+                    }
                 }
 
                 in.close();
