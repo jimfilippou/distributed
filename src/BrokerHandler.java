@@ -1,10 +1,8 @@
-import Helpers.Hash;
 import Models.Broker;
 import Models.Consumer;
 import Models.Stigma;
 import Models.Wrapper;
 
-import java.io.EOFException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
@@ -41,8 +39,7 @@ public class BrokerHandler extends Thread {
                     this.broker.getRegisteredConsumers().add(value);
                     System.out.println(this.broker + " Received registration event from " + value.toString());
                 } else {
-                    // Received stigma
-                    // TODO send this back to consumers
+                    // Received stigma, send this back to consumers
                     System.out.println(this.broker.toString() + " Received -> " + incoming.data);
                     for (Consumer consumer : this.broker.getRegisteredConsumers()) {
                         Integer incomingTopic = ((Stigma) (incoming.data)).getTopic();
