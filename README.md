@@ -1,14 +1,22 @@
+### A multi-threaded, distributed publish-subscribe system
+
 #### Diagram
 
 ![](Skeleton.png)
 
-#### Running an entity
+#### Running entities
 
-##### Broker
-`java Main broker <ip> <port>`
+This requires 3 processes, compile the project with IDEA and after opening 3 terminal 
+sessions, fist run publishers, then brokers and finally consumers. The executable
+class files are located at `out/production/distributed`. You will have to edit
+the IP of the main class, also edit `Data/brokers.txt` to match your local network **and** 
+finally edit `Helpers` package to use a proper absolute path.
+
+##### Brokers
+`java Main brokers`
 
 ##### Publisher
-`java Main publisher <ip> <port>`
+`java Main publishers`
 
 ##### Consumer
-`java Main consumer <ip> <port>`
+`java Main consumers`
