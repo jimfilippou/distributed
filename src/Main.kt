@@ -1,0 +1,54 @@
+import Entities.BrokerEntity
+import Entities.ConsumerEntity
+import Entities.PublisherEntity
+import Helpers.ArgParser
+import Helpers.BrokerProvider
+import Models.Broker
+import Models.Consumer
+import Models.Publisher
+
+import java.util.ArrayList
+
+
+object Main {
+
+    @JvmStatic
+    fun main(args: Array<String>) {
+
+        // ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}'
+        val IP = "192.168.1.4"
+
+        when (args[0]) {
+            "brokers" -> {
+                val brokers = ArrayList<BrokerEntity>()
+                // Create brokers
+                for (broker in BrokerProvider.fetchBrokers()) {
+                    // Supply broker with available publishers
+                    for (publisher in ArgParser.fetchPublishersFromCommandLine(args)) {
+                        broker.addPublisher(publisher)
+                    }
+                    val x = BrokerEntity(broker)
+                    x.startServer()
+                    brokers.add(x)
+                }
+                // Start brokers
+                for (brokerEntity in brokers) {
+                    brokerEntity.startSender()
+                }
+            }
+            "publishers" -> {
+                val publisher = Publisher(IP, 9090)
+                PublisherEntity(publisher)
+                        .addTopic(821)
+                        .start()
+            }
+            "consumers" -> {
+                val consumer = Consumer(IP, 9091)
+                val consumerEntity = ConsumerEntity(consumer)
+                consumerEntity.register(Broker(IP, 8081), 821)
+                consumerEntity.startListening()
+            }
+            else -> println("Not recognized command.")
+        }
+    }
+}
