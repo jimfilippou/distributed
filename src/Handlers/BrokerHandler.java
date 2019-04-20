@@ -1,3 +1,5 @@
+package Handlers;
+
 import Models.Broker;
 import Models.Consumer;
 import Models.Stigma;
@@ -15,7 +17,7 @@ public class BrokerHandler extends Thread {
 
     private Broker broker;
 
-    BrokerHandler(Broker broker) {
+    public BrokerHandler(Broker broker) {
         this.broker = broker;
     }
 

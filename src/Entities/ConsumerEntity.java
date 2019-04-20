@@ -1,3 +1,6 @@
+package Entities;
+
+import Handlers.ConsumerHandler;
 import Models.Broker;
 import Models.Consumer;
 import Models.Wrapper;
@@ -11,11 +14,11 @@ public class ConsumerEntity {
 
     private Consumer consumer;
 
-    ConsumerEntity(Consumer consumer) {
+    public ConsumerEntity(Consumer consumer) {
         this.consumer = consumer;
     }
 
-    void register(Broker broker, Integer topic) {
+    public void register(Broker broker, Integer topic) {
         try {
             Socket requestSocket;
             ObjectOutputStream out;
@@ -38,7 +41,7 @@ public class ConsumerEntity {
 
     }
 
-    void startListening() {
+    public void startListening() {
         new ConsumerHandler(this.consumer)
                 .run();
     }

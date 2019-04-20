@@ -1,4 +1,7 @@
-import Helpers.BusReader;
+package Entities;
+
+import Handlers.PublisherHandler;
+import Helpers.BusProvider;
 import Models.Broker;
 import Models.Publisher;
 import Models.Stigma;
@@ -9,21 +12,21 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.concurrent.TimeUnit;
 
-class PublisherEntity {
+public class PublisherEntity {
 
     private Publisher publisher;
 
-    PublisherEntity(Publisher publisher) {
+    public PublisherEntity(Publisher publisher) {
         this.publisher = publisher;
     }
 
-    void start() {
+    public void start() {
         // Start the listener, to listen from brokers
         new PublisherHandler(this.publisher).start();
 
         try {
             for (int busID : this.publisher.getTopics()) {
-                for (Stigma stigma : BusReader.readBusPositions(busID)) {
+                for (Stigma stigma : BusProvider.readBusPositions(busID)) {
                     TimeUnit.SECONDS.sleep(3);
                     stigma.setTopic(busID);
                     push(busID, stigma);
@@ -61,7 +64,7 @@ class PublisherEntity {
         }
     }
 
-    PublisherEntity addTopic(int busLineID) {
+    public PublisherEntity addTopic(int busLineID) {
         this.publisher.addTopic(busLineID);
         return this;
     }

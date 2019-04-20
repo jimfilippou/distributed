@@ -1,3 +1,5 @@
+package Handlers;
+
 import Models.Consumer;
 import Models.Wrapper;
 
@@ -11,7 +13,7 @@ public class ConsumerHandler extends Thread {
 
     private Consumer consumer;
 
-    ConsumerHandler(Consumer consumer) {
+    public ConsumerHandler(Consumer consumer) {
         this.consumer = consumer;
     }
 

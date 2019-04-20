@@ -13,7 +13,7 @@ the IP of the main class, also edit `Data/brokers.txt` to match your local netwo
 finally edit `Helpers` package to use a proper absolute path.
 
 ##### Brokers
-`java Main brokers`
+`java Main brokers -p 192.168.1.4:9090`
 
 ##### Publisher
 `java Main publishers`

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.lang.String;
 
-public class BusReader {
+public class BusProvider {
     public static List<Bus> fetchBuses() throws FileNotFoundException {
         Scanner input = new Scanner(new File("/Users/jimfilippou/Projects/distributed/src/Data/busLines.txt"));
         // Scanner input = new Scanner(new File("/home/jimfilippou/IdeaProjects/distributed/src/Data/busLines.txt"));

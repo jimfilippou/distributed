@@ -1,3 +1,6 @@
+package Entities;
+
+import Handlers.BrokerHandler;
 import Helpers.BrokerProvider;
 import Models.Broker;
 import Models.Publisher;
@@ -6,15 +9,15 @@ import Models.Wrapper;
 import java.io.*;
 import java.net.*;
 
-class BrokerEntity {
+public class BrokerEntity {
 
     private Broker broker;
 
-    BrokerEntity(Broker broker) {
+    public BrokerEntity(Broker broker) {
         this.broker = broker;
     }
 
-    void startSender() {
+    public void startSender() {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -56,7 +59,7 @@ class BrokerEntity {
         }
     }
 
-    void startServer() {
+    public void startServer() {
         new BrokerHandler(this.broker).start();
     }
 

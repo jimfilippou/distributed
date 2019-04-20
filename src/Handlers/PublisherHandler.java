@@ -1,3 +1,5 @@
+package Handlers;
+
 import Models.Broker;
 import Models.Publisher;
 import Models.Wrapper;
@@ -12,7 +14,7 @@ public class PublisherHandler extends Thread {
 
     private Publisher publisher;
 
-    PublisherHandler(Publisher publisher) {
+    public PublisherHandler(Publisher publisher) {
         this.publisher = publisher;
     }
 
