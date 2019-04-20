@@ -20,3 +20,8 @@ finally edit `helpers` package to use a proper absolute path.
 
 ##### Consumer
 `java Main consumers`
+
+#### Notice
+This project does not use neither Gradle nor Maven for dependency management and automation.
+In order to compile, you will need several JAR files which can be found <a href="https://mega.nz/#!XPJgXQTQ!ZGCqxZ8U_FbQOMcYN_34E9Te8B_K9IRCs2eE0vC64qI">here<a>.
+The lib folder must go to the project's root. Accessibility will improve in the future, keep calm. 
