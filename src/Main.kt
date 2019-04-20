@@ -1,11 +1,11 @@
-import Entities.BrokerEntity
-import Entities.ConsumerEntity
-import Entities.PublisherEntity
-import Helpers.ArgParser
-import Helpers.BrokerProvider
-import Models.Broker
-import Models.Consumer
-import Models.Publisher
+import entities.BrokerEntity
+import entities.ConsumerEntity
+import entities.PublisherEntity
+import helpers.ArgParser
+import helpers.BrokerProvider
+import models.Broker
+import models.Consumer
+import models.Publisher
 
 import java.util.ArrayList
 

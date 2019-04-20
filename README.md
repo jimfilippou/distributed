@@ -10,7 +10,7 @@ This requires 3 processes, compile the project with IDEA and after opening 3 ter
 sessions, fist run publishers, then brokers and finally consumers. The executable
 class files are located at `out/production/distributed`. You will have to edit
 the IP of the main class, also edit `Data/brokers.txt` to match your local network **and** 
-finally edit `Helpers` package to use a proper absolute path.
+finally edit `helpers` package to use a proper absolute path.
 
 ##### Brokers
 `java Main brokers -p 192.168.1.4:9090`
