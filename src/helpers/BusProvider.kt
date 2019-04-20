@@ -5,14 +5,14 @@ import models.Stigma
 
 import java.io.File
 import java.io.FileNotFoundException
-import java.util.ArrayList
-import java.util.Scanner
+import java.util.*
+import kotlin.collections.HashMap
 
 object BusProvider {
     @Throws(FileNotFoundException::class)
     fun fetchBuses(): List<Bus> {
-        val input = Scanner(File("/Users/jimfilippou/Projects/distributed/src/Data/busLines.txt"))
-        // Scanner input = new Scanner(new File("/home/jimfilippou/IdeaProjects/distributed/src/Data/busLines.txt"));
+        val input = Scanner(File("/Users/jimfilippou/Projects/distributed/src/data/busLines.txt"))
+        // Scanner input = new Scanner(new File("/home/jimfilippou/IdeaProjects/distributed/src/data/busLines.txt"));
         input.useDelimiter("-\n")
         val buses = ArrayList<models.Bus>()
         while (input.hasNextLine()) {
@@ -27,18 +27,21 @@ object BusProvider {
     }
 
     @Throws(FileNotFoundException::class)
-    fun readBusPositions(busID: Int): ArrayList<Stigma> {
-        val input = Scanner(File("/Users/jimfilippou/Projects/distributed/src/Data/busPositions.txt"))
+    fun readBusPositions(topics: IntArray): HashMap<Int, Queue<Stigma>> {
+        val response: HashMap<Int, Queue<Stigma>> = HashMap()
+        val input = Scanner(File("/Users/jimfilippou/Projects/distributed/src/data/busPositions.txt"))
         input.useDelimiter("-\n")
-        val response = ArrayList<Stigma>()
+        for (topic in topics){
+            response[topic] = LinkedList<Stigma>()
+        }
         while (input.hasNextLine()) {
             val data = input.nextLine().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            val busId = data[0]
+            val busId = Integer.parseInt(data[0])
             val x = java.lang.Double.valueOf(data[3])
             val y = java.lang.Double.valueOf(data[4])
             val timestamp = data[5]
-            if (busID.toString() == busId) {
-                response.add(Stigma(x, y, timestamp))
+            if (topics.indexOf(busId) != -1) {
+                response[busId]!!.add(Stigma(x, y, timestamp))
             }
         }
         return response

@@ -15,10 +15,10 @@ class PublisherHandler(private val publisher: Publisher) : Thread() {
     override fun run() {
         val providerSocket: ServerSocket
         var connection: Socket
-        val addr: InetAddress
+        val address: InetAddress
         try {
-            addr = InetAddress.getByName(this.publisher.ip)
-            providerSocket = ServerSocket(this.publisher.port, 50, addr)
+            address = InetAddress.getByName(this.publisher.ip)
+            providerSocket = ServerSocket(this.publisher.port, 50, address)
             println(this.publisher.toString() + " Server started")
             while (true) {
                 connection = providerSocket.accept()

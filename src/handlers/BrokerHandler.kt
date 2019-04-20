@@ -17,17 +17,16 @@ class BrokerHandler(private val broker: Broker) : Thread() {
     override fun run() {
         val providerSocket: ServerSocket
         var connection: Socket
-        val addr: InetAddress
+        val address: InetAddress
         try {
-            addr = InetAddress.getByName(this.broker.ip)
-            providerSocket = ServerSocket(this.broker.port, 50, addr)
+            address = InetAddress.getByName(this.broker.ip)
+            providerSocket = ServerSocket(this.broker.port, 50, address)
             while (true) {
                 connection = providerSocket.accept()
                 val out = ObjectOutputStream(connection.getOutputStream())
                 val `in` = ObjectInputStream(connection.getInputStream())
-
                 val incoming = `in`.readUnshared() as Wrapper<*>
-
+                // Registration event from consumer
                 if (incoming.data is HashMap<*, *>) {
                     val entry = (incoming.data as HashMap<*, *>).entries.iterator().next()
                     val value = entry.value as Consumer
@@ -35,13 +34,13 @@ class BrokerHandler(private val broker: Broker) : Thread() {
                     println(this.broker.toString() + " Received registration event from " + value.toString())
                 } else {
                     // Received stigma, send this back to consumers
-                    println(this.broker.toString() + " Received -> " + incoming.data)
+                    println("$broker Received -> ${incoming.data}")
                     for (consumer in this.broker.registeredConsumers) {
                         val incomingTopic = (incoming.data as Stigma).topic
                         if (consumer.interests.indexOf(incomingTopic) != -1) {
                             try {
-                                val requestSocket: Socket = Socket(InetAddress.getByName(consumer.ip)!!, consumer.port!!)
-                                val outWriter: ObjectOutputStream = ObjectOutputStream(requestSocket.getOutputStream())
+                                val requestSocket = Socket(InetAddress.getByName(consumer.ip)!!, consumer.port!!)
+                                val outWriter = ObjectOutputStream(requestSocket.getOutputStream())
                                 val toSend = Wrapper<Stigma>()
                                 toSend.data = incoming.data as Stigma
                                 println(this.broker.toString() + " Sent -> " + (incoming.data as Stigma).toString())

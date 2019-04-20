@@ -19,12 +19,14 @@ class PublisherEntity(private val publisher: Publisher) {
         PublisherHandler(this.publisher).start()
 
         try {
-            for (busID in this.publisher.topics) {
-                for (stigma in BusProvider.readBusPositions(busID)) {
-                    TimeUnit.SECONDS.sleep(3)
-                    stigma.topic = busID
-                    push(busID, stigma)
-                    println(this.publisher.toString() + " Got data from sensor -> " + busID + ": " + stigma)
+            publisher.data = BusProvider.readBusPositions(publisher.topics.toIntArray())
+            while (!publisher.data.isEmpty()) {
+                for (key in publisher.data.keys) {
+                    TimeUnit.SECONDS.sleep(2)
+                    val stigma: Stigma = publisher.data[key]!!.poll()
+                    stigma.topic = key
+                    push(key, stigma)
+                    println(this.publisher.toString() + " Got data from sensor -> " + key + ": " + stigma)
                 }
             }
         } catch (err: Exception) {
@@ -45,7 +47,7 @@ class PublisherEntity(private val publisher: Publisher) {
 
     private fun sendToBroker(broker: Broker, stigma: Stigma) {
         try {
-            val requestSocket: Socket = Socket(InetAddress.getByName(broker.ip), broker.port)
+            val requestSocket = Socket(InetAddress.getByName(broker.ip), broker.port)
             val out: ObjectOutputStream
             out = ObjectOutputStream(requestSocket.getOutputStream())
             val toSend = Wrapper<Stigma>()

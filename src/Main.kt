@@ -40,6 +40,7 @@ object Main {
                 val publisher = Publisher(IP, 9090)
                 PublisherEntity(publisher)
                         .addTopic(821)
+                        .addTopic(804)
                         .start()
             }
             "consumers" -> {

@@ -1,12 +1,13 @@
 package models
 
 import java.io.Serializable
-import java.util.ArrayList
+import java.util.*
+import kotlin.collections.HashMap
 
 class Publisher(val ip: String, val port: Int) : Serializable {
 
     val brokers: MutableList<Broker> = ArrayList()
-
+    var data: HashMap<Int, Queue<Stigma>> = HashMap()
     val topics = ArrayList<Int>()
 
     fun addTopic(topic: Int) {
@@ -14,7 +15,7 @@ class Publisher(val ip: String, val port: Int) : Serializable {
     }
 
     override fun toString(): String {
-        return "Publisher " + this.ip + ":" + this.port
+        return "Publisher ${this.ip}:${this.port}"
     }
 
     companion object {

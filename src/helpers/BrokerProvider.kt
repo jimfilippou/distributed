@@ -11,11 +11,10 @@ object BrokerProvider {
     fun fetchBrokers(): List<Broker> {
         var input: Scanner? = null
         try {
-            input = Scanner(File("/Users/jimfilippou/Projects/distributed/src/Data/brokers.txt"))
+            input = Scanner(File("/Users/jimfilippou/Projects/distributed/src/data/brokers.txt"))
         } catch (e: FileNotFoundException) {
             e.printStackTrace()
         }
-
         input!!.useDelimiter("-\n")
         val brokers = ArrayList<Broker>()
         while (input.hasNextLine()) {
