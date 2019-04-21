@@ -28,7 +28,7 @@ class Stigma(private val lat: Double, private val lng: Double, timestamp: String
     }
 
     override fun toString(): String {
-        return "S{" + this.lat + ", " + this.lng + "}"
+        return "Stigma ${this.lat}, ${this.lng}"
     }
 
     companion object {

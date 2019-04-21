@@ -25,7 +25,7 @@ class PublisherHandler(private val publisher: Publisher) : Thread() {
                 val out = ObjectOutputStream(connection.getOutputStream())
                 val `in` = ObjectInputStream(connection.getInputStream())
                 val incoming = `in`.readObject() as Wrapper<*>
-                println(this.publisher.toString() + " Received -> " + incoming.data!!.toString())
+                println("$publisher Received -> ${incoming.data!!}")
                 synchronized(this) {
                     if (incoming.data is Broker) {
                         this.publisher.brokers.add(incoming.data as Broker)

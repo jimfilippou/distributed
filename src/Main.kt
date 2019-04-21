@@ -16,7 +16,7 @@ object Main {
     fun main(args: Array<String>) {
 
         // ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}'
-        val IP = "192.168.1.4"
+        val IP = "10.101.67.186"
 
         when (args[0]) {
             "brokers" -> {

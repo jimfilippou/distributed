@@ -39,7 +39,7 @@ class BrokerEntity(private val broker: Broker) {
 
     private fun socketSend(ip: String, port: Int, `object`: Any) {
         try {
-            val requestSocket: Socket = Socket(InetAddress.getByName(ip), port)
+            val requestSocket = Socket(InetAddress.getByName(ip), port)
             val out: ObjectOutputStream
             out = ObjectOutputStream(requestSocket.getOutputStream())
             val toSend = Wrapper<Broker>()
