@@ -8,21 +8,19 @@ import models.Wrapper
 import java.io.ObjectOutputStream
 import java.net.InetAddress
 import java.net.Socket
-import java.util.HashMap
 
 class ConsumerEntity(private val consumer: Consumer) {
 
-    fun register(broker: Broker, topic: Int?) {
+    fun register(broker: Broker, topic: Int) {
         try {
-            val requestSocket: Socket = Socket(InetAddress.getByName(broker.ip), broker.port)
+            val requestSocket = Socket(InetAddress.getByName(broker.ip), broker.port)
             val out: ObjectOutputStream
             out = ObjectOutputStream(requestSocket.getOutputStream())
-            println("Adding " + topic!!.toString() + " to the interests list.")
-            this.consumer.addInterest(topic)
-            val toSend = Wrapper<HashMap<Int, Consumer>>()
-            toSend.data = HashMap()
-            toSend.data!![topic] = this.consumer
-            println(this.consumer.toString() + " Sent registration event -> " + broker.toString())
+            println("Adding $topic to the interests list.")
+            consumer.addInterest(topic)
+            val toSend = Wrapper<Consumer>()
+            toSend.data = consumer
+            println("$consumer Sent registration event -> $broker")
             out.writeUnshared(toSend)
             out.flush()
         } catch (err: Exception) {
