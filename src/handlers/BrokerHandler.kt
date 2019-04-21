@@ -29,6 +29,8 @@ class BrokerHandler(private val broker: Broker) : Thread() {
                 if (incoming.data is Consumer) {
                     this.broker.registeredConsumers.add((incoming.data) as Consumer)
                     println("$broker Received registration event from ${incoming.data}")
+                } else if (incoming.data is Broker) {
+                    println("Received from ${incoming.data}")
                 } else {
                     // Received stigma, send this back to consumers
                     val stigma: Stigma = incoming.data as Stigma

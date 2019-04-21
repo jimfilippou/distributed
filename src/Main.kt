@@ -24,8 +24,8 @@ object Main {
                 // Create brokers
                 for (broker in BrokerProvider.fetchBrokers()) {
                     // Supply broker with available publishers
-                    for (publisher in ArgParser.fetchPublishersFromCommandLine(args)) {
-                        broker.addPublisher(publisher)
+                    for (publisher in ArgParser.fetchPublishersFromCommandLine(args, "publisher")) {
+                        broker.addPublisher(publisher as Publisher)
                     }
                     val x = BrokerEntity(broker)
                     x.startServer()
