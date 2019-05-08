@@ -3,7 +3,6 @@ import entities.ConsumerEntity
 import entities.PublisherEntity
 import helpers.ArgParser
 import helpers.BrokerProvider
-import models.Broker
 import models.Consumer
 import models.Publisher
 
@@ -15,8 +14,8 @@ object Main {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        // ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}'
-        val IP = "10.101.67.186"
+        // $ ~ ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}'
+        val ip = "192.168.1.83"
 
         when (args[0]) {
             "brokers" -> {
@@ -37,16 +36,16 @@ object Main {
                 }
             }
             "publishers" -> {
-                val publisher = Publisher(IP, 9090)
+                val publisher = Publisher(ip, 9090)
                 PublisherEntity(publisher)
                         .addTopic(821)
                         .addTopic(804)
                         .start()
             }
             "consumers" -> {
-                val consumer = Consumer(IP, 9091)
+                val consumer = Consumer(ip, 9091)
                 val consumerEntity = ConsumerEntity(consumer)
-                consumerEntity.register(Broker(IP, 8081), 821)
+                consumerEntity.register(821)
                 consumerEntity.startListening()
             }
             else -> println("Not recognized command.")

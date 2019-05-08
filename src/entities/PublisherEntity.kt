@@ -60,7 +60,7 @@ class PublisherEntity(private val publisher: Publisher) {
             out.writeUnshared(toSend)
             out.flush()
         } catch (err: Exception) {
-            System.err.println(this.publisher.toString() + " Tried to connect to -> " + broker.toString() + " But was down.")
+            System.err.println("$publisher Tried to connect to -> $broker But was down.")
         }
 
     }
