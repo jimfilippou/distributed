@@ -1,4 +1,4 @@
-package models
+package gr.aueb.distributedapp.models
 
 import java.io.Serializable
 import java.util.*

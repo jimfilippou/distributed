@@ -1,6 +1,6 @@
 package helpers
 
-import models.Broker
+import gr.aueb.distributedapp.models.Broker
 
 import java.io.File
 import java.io.FileNotFoundException

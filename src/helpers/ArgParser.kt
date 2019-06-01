@@ -1,7 +1,8 @@
 package helpers
 
-import models.Broker
-import models.Publisher
+import gr.aueb.distributedapp.models.Broker
+import gr.aueb.distributedapp.models.Publisher
+
 import java.util.*
 
 object ArgParser {

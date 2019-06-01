@@ -1,7 +1,7 @@
 package handlers
 
-import models.Consumer
-import models.Wrapper
+import gr.aueb.distributedapp.models.Wrapper
+import gr.aueb.distributedapp.models.Consumer
 
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream

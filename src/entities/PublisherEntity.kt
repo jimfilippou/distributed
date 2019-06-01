@@ -1,11 +1,12 @@
 package entities
 
+import gr.aueb.distributedapp.models.Wrapper
+import gr.aueb.distributedapp.models.Stigma
+import gr.aueb.distributedapp.models.Broker
+import gr.aueb.distributedapp.models.Publisher
+
 import handlers.PublisherHandler
 import helpers.BusProvider
-import models.Broker
-import models.Publisher
-import models.Stigma
-import models.Wrapper
 
 import java.io.ObjectOutputStream
 import java.net.InetAddress

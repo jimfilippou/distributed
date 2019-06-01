@@ -1,10 +1,10 @@
 package entities
 
+import gr.aueb.distributedapp.models.Wrapper
+import gr.aueb.distributedapp.models.Consumer
+
 import handlers.ConsumerHandler
 import helpers.BrokerProvider
-import models.Broker
-import models.Consumer
-import models.Wrapper
 
 import java.io.ObjectOutputStream
 import java.net.InetAddress

@@ -1,8 +1,8 @@
 package handlers
 
-import models.Broker
-import models.Publisher
-import models.Wrapper
+import gr.aueb.distributedapp.models.Wrapper
+import gr.aueb.distributedapp.models.Broker
+import gr.aueb.distributedapp.models.Publisher
 
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream

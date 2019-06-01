@@ -1,10 +1,11 @@
 package entities
 
+import gr.aueb.distributedapp.models.Wrapper
+import gr.aueb.distributedapp.models.Broker
+import gr.aueb.distributedapp.models.Publisher
+
 import handlers.BrokerHandler
 import helpers.BrokerProvider
-import models.Broker
-import models.Publisher
-import models.Wrapper
 
 import java.io.*
 import java.net.*

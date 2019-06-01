@@ -1,4 +1,4 @@
-package models
+package gr.aueb.distributedapp.models
 
 class Bus(private val lineNumber: String, private val busLineID: String, private val lineName: String) {
 //    private val routeCode: String

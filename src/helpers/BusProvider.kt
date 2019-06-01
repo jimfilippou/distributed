@@ -1,6 +1,6 @@
 package helpers
 
-import models.Stigma
+import gr.aueb.distributedapp.models.Stigma
 
 import java.io.File
 import java.io.FileNotFoundException

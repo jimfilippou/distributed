@@ -1,10 +1,16 @@
+// Models
+import gr.aueb.distributedapp.models.Consumer
+import gr.aueb.distributedapp.models.Publisher
+
+// Entities
 import entities.BrokerEntity
 import entities.ConsumerEntity
 import entities.PublisherEntity
+
+// Helpers
 import helpers.ArgParser
 import helpers.BrokerProvider
-import models.Consumer
-import models.Publisher
+
 
 import java.util.ArrayList
 
@@ -15,7 +21,7 @@ object Main {
     fun main(args: Array<String>) {
 
         // $ ~ ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}'
-        val ip = "192.168.1.83"
+        val ip = "192.168.1.26"
 
         when (args[0]) {
             "brokers" -> {
